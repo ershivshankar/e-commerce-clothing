@@ -135,8 +135,8 @@ Open your browser and navigate to `http://localhost:3000`.
 ---
 <h2><a class="anchor" id="author--contact"></a>Author & Contact</h2>
 
-**[Your Name]**  
+**SHIV SHANKAR YADAV** 
 Full Stack Developer  
-📧 Email: [Your Email]  
-🔗 [LinkedIn](https://www.linkedin.com/in/yourprofile/)  
-🔗 [GitHub](https://github.com/yourusername)  
+📧 Email: [shivshankaryadav02@gmail.com]  
+🔗 [LinkedIn](https://www.linkedin.com/in/shiv/)  
+🔗 [GitHub](https://github.com/shive)  
