@@ -1,0 +1,105 @@
+=========================================================
+      AARADHIYA TRENDS & STYLES - E-COMMERCE PLATFORM
+=========================================================
+Project Overview & Explanation
+
+1. INTRODUCTION
+---------------------------------------------------------
+Aaradhiya Trends & Styles is a modern, fully responsive Full Stack 
+E-commerce web application. The platform provides a comprehensive 
+online shopping experience specifically tailored for premium clothing 
+(Menswear and Womenswear). 
+
+The platform supports a full end-to-end user journey: 
+From browsing seasonal collections and specific attire (like 
+Shirts, Lehengas, Jeans, etc.), to adding items to a global cart, 
+creating an account, securely logging in, and completing checkout 
+with multiple payment methods.
+
+2. TECHNOLOGY STACK
+---------------------------------------------------------
+
+[FRONTEND]
+The frontend is designed to be highly interactive, fast, and SEO-friendly.
+- Core Framework: Next.js (App Router) combined with React.js
+- Markup & Logic: HTML5 (written as JSX/TSX within React components) and TypeScript for strong typing and error prevention.
+- Styling: Tailwind CSS (for modern UI layout, responsiveness, and design tokens)
+- State Management: React Context API (AuthContext and CartContext) to persist user 
+  states across all pages seamlessly without external libraries like Redux.
+- Icons & UI: Lucide React (for minimalist SVG icons).
+- Communication: Client-side `fetch` API using standard HTTP verbs mapping securely 
+  to the backend endpoints.
+
+[BACKEND]
+The backend is a robust RESTful API built to handle requests quickly and safely.
+- Environment: Node.js
+- Framework: Express.js (middleware, routing, request parsing)
+- ORM (Database Query Builder): Prisma (v5.20.0). Prisma strictly types our database 
+  structure, ensuring that data like orders or prices perfectly match definitions.
+- Security & Auth: 
+   * bcryptjs (Cryptographic password hashing so no passwords exist in plaintext).
+   * JSON Web Tokens (jsonwebtoken - securely verifying logged-in users during API calls).
+
+[DATABASE]
+- Serverless PostgreSQL via Neon DB. 
+  Our data logic uses relational tables where records intertwine perfectly (e.g., An Order 
+  is explicitly connected to a User and several OrderItems).
+
+
+3. DETAILED FEATURE EXPLANATION
+---------------------------------------------------------
+
+A. Authentication System (Signup, Login & Authorization)
+   - Functionality: Users can create an account using their First Name, Last Name, 
+     Email, and Password. Upon submission, the backend securely hashes the password 
+     using bcrypt and stores the individual in the Neon DB.
+   - JWT System: When logging in, the backend verifies the user. If successful, 
+     it issues a JWT (JSON Web Token). The React frontend stores this token and passes 
+     it back as a "Bearer" token in the Authorization header to verify identity on 
+     protected routes (like viewing profile or placing orders).
+
+B. Product Catalog & Browse Flow
+   - Functionality: The homepage spotlights key items, seasonal collections, and 
+     navigational mega-menus. The data flows through Context and REST APIs.
+   - Design: The clothing catalog features robust filtering options allowing users to 
+     filter easily among dynamic categories (menswear, womenswear, occasion-based). 
+
+C. Cart Management (The Drawer)
+   - Functionality: Users can toggle items into their cart. The CartContext manages 
+     all the math dynamically (quantity, pricing thresholds for free shipping, grand total).
+   - Storage: Automatically synchronizes with local storage as a fallback, ensuring items 
+     aren't lost if the user accidentally refreshes the page.
+
+D. Secure Checkout & Form Validation
+   - Functionality: The checkout involves a multi-step design where individuals input 
+     shipping addresses securely. 
+   - State Handling: It validates details (regex for phone/pin-code) before allowing 
+     them to proceed to payment (COD, Card processing formats, UPI IDs).
+
+E. Order Processing & Database Tracking
+   - Functionality: Once a user confirms checkout, the React frontend dispatches the 
+     complex structure (including an array of ALL purchased items, prices, shipping 
+     address, and selected payment method) to the `POST /api/orders` backend route.
+   - Prisma Magic: Prisma simultaneously writes to the `Order` table AND maps the 
+     cart items dynamically to the `OrderItem` table, binding the entire receipt to the 
+     `userId`. 
+
+F. User Profile Dashboard
+   - Functionality: Once logged in, users have access to a rich personalized dashboard. 
+     The frontend sends a GET request to `/api/orders` along with the user's secure token. 
+     The backend scans the database and returns only the authenticated user's purchase 
+     history showing dates, costs, specific items ordered, and delivery addresses.
+
+
+4. PROJECT ARCHITECTURE / DIRECTORIES
+---------------------------------------------------------
+- `\frontend\` -> Contains the Next.js frontend code.
+  - `src/app/` -> Handles individual page routes (Home, Profile, Checkout, etc.)
+  - `src/components/` -> Modular UI portions (Header, CartDrawer, ProductCard, etc.)
+  - `src/context/` -> Global states tracking User Login definitions and Shopping Cart items.
+
+- `\backend\` -> Contains the Node/Express.js backend logic.
+  - `server.js` -> The main entry point mounting endpoints to specific controller files.
+  - `routes/` -> Express Routers sorting URLs (e.g., authRoutes, orderRoutes, etc.)
+  - `prisma/schema.prisma` -> The definitive map of our PostgreSQL PostgreSQL database models.
+  - `config/db.js` -> Central initialisation mapping the application securely to the Neon Database instance using PrismaClient.

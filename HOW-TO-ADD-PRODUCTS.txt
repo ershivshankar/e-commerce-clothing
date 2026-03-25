@@ -1,0 +1,142 @@
+============================================================
+  HOW TO ADD PRODUCTS & IMAGES - Aaradhiya Trends & Styles
+============================================================
+
+All product data is stored in one file:
+  f:\College_project-FS\backend\data\staticData.js
+
+============================================================
+STEP 1: ADD A NEW PRODUCT
+============================================================
+
+Open the file: backend\data\staticData.js
+
+Find the "products" array and add a new entry at the end.
+Copy this template and fill in your details:
+
+    {
+        id: 43,                          <-- Use the next number (last product id + 1)
+        name: 'Your Product Name',
+        price: 1999,                     <-- Selling price in INR
+        originalPrice: 2999,             <-- Original/MRP price (optional, for showing discount)
+        image: '/images/products/your-image.jpg',   <-- See STEP 2 for image instructions
+        category: 'jeans',               <-- Must match a category slug (see list below)
+        gender: 'men',                   <-- 'men' or 'women'
+        sizes: ['S', 'M', 'L', 'XL'],   <-- Available sizes
+        colors: ['Red', 'Blue'],         <-- Available colors
+        occasion: 'casual',              <-- 'casual', 'formal', 'wedding', 'festive', 'mehendi'
+        season: 'all',                   <-- 'all', 'summer', 'winter'
+        isNew: true,                     <-- true = shows "New" badge, false = no badge
+        description: 'Description of your product here.'
+    },
+
+AVAILABLE CATEGORY SLUGS:
+  Men:   jeans, t-shirts, shirts, jeans-jacket
+  Women: kurtas, lehengas, sarees, dresses, anarkalis, kaftans, sharara-sets
+
+
+============================================================
+STEP 2: ADD PRODUCT IMAGES
+============================================================
+
+OPTION A - Use local images (recommended):
+  1. Create folder: frontend\public\images\products\
+  2. Put your image file there (e.g., my-product.jpg)
+  3. In the product data, set image to: '/images/products/my-product.jpg'
+  4. Image tips:
+     - Use JPG or WebP format for best performance
+     - Recommended size: 600px wide x 800px tall (3:4 ratio)
+     - Keep file size under 500KB
+
+OPTION B - Use online image URLs:
+  1. Upload your image to any image hosting service
+     (e.g., Imgur, Cloudinary, or your own server)
+  2. Copy the direct image URL
+  3. In the product data, set image to the full URL:
+     image: 'https://your-host.com/your-image.jpg'
+  4. Make sure the URL in next.config.ts allows the hostname:
+     Open frontend\next.config.ts and add your hostname to remotePatterns
+
+
+============================================================
+STEP 3: ADD A NEW CATEGORY
+============================================================
+
+In the same file (backend\data\staticData.js), find the "categories" array
+and add a new entry:
+
+    {
+        id: 12,                          <-- Next number after last category
+        name: 'Palazzo Sets',            <-- Display name
+        slug: 'palazzo-sets',            <-- URL-friendly name (lowercase, hyphens)
+        image: '/images/categories/palazzo.jpg',   <-- Category thumbnail image
+        gender: 'women'                  <-- 'men' or 'women'
+    },
+
+Then also update the frontend config:
+  Open: frontend\src\config\siteConfig.ts
+  Add the new category to either menCategories or womenCategories array:
+
+    { name: "Palazzo Sets", slug: "palazzo-sets", image: "/images/categories/palazzo.jpg" },
+
+
+============================================================
+STEP 4: RESTART THE SERVER
+============================================================
+
+After making changes to staticData.js:
+  1. Stop the backend server (Ctrl+C in the terminal)
+  2. Restart it:  cd backend && node server.js
+
+The frontend (Next.js) will auto-refresh, no restart needed.
+
+
+============================================================
+STEP 5: WHEN YOU HAVE A DATABASE (OPTIONAL - FUTURE)
+============================================================
+
+If you set up a PostgreSQL database later (e.g., Neon, Supabase, Vercel Postgres):
+
+  1. Add your DATABASE_URL to backend\.env:
+     DATABASE_URL="postgresql://user:password@host:5432/database?sslmode=require"
+
+  2. Generate Prisma client:
+     cd backend && npx prisma generate
+
+  3. Push schema to database:
+     cd backend && npx prisma db push
+
+  4. Seed the database:
+     cd backend && npm run seed
+
+  5. Update controllers to use Prisma instead of static data
+     (the Prisma versions are saved in the prisma/ folder)
+
+
+============================================================
+FILE STRUCTURE REFERENCE
+============================================================
+
+backend\
+  data\staticData.js       <-- ALL product/category/review data lives here
+  controllers\             <-- API logic
+  routes\                  <-- API endpoints
+  server.js                <-- Express server
+
+frontend\
+  public\images\           <-- Put your product images here
+  src\config\siteConfig.ts <-- Brand name, hero slides, categories for navigation
+  src\components\          <-- UI components
+  src\app\                 <-- Pages
+
+============================================================
+QUICK REFERENCE - Adding a product in 30 seconds:
+============================================================
+
+1. Open backend\data\staticData.js
+2. Copy the last product entry
+3. Change the id (increment by 1)
+4. Change name, price, image, category, gender, etc.
+5. Save the file
+6. Restart backend: node server.js
+7. Refresh browser - your product appears!

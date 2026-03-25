@@ -1,0 +1,25 @@
+{
+    "name": "aaradhiya-trends-styles",
+    "version": "1.0.0",
+    "description": "Full-stack e-commerce application",
+    "private": true,
+    "scripts": {
+        "start": "npm run start:all",
+        "start:all": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+        "start:backend": "cd backend && npm start",
+        "start:frontend": "cd frontend && npm run dev",
+        "dev": "npm run start:all",
+        "build": "npm run build:frontend",
+        "build:frontend": "cd frontend && npm run build",
+        "install:all": "npm run install:backend && npm run install:frontend",
+        "install:backend": "cd backend && npm install",
+        "install:frontend": "cd frontend && npm install",
+        "seed": "cd backend && npm run seed"
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
