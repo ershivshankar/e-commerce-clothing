@@ -137,6 +137,6 @@ Open your browser and navigate to `http://localhost:3000`.
 
 **SHIV SHANKAR YADAV** 
 Full Stack Developer  
-📧 Email: [shivshankaryadav02@gmail.com]  
+📧 Email: shivshankaryadav02@gmail.com 
 🔗 [LinkedIn](https://www.linkedin.com/in/shiv/)  
 🔗 [GitHub](https://github.com/shive)  
